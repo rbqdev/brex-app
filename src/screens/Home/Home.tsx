@@ -1,7 +1,7 @@
 import { ScrollView, View, VStack } from 'native-base';
 import React from 'react';
 
-import { CardAvailableBalance, CardTasks } from './components';
+import { CardAvailableBalance, CardCreditCards, CardTasks } from './components';
 
 export const HomeScreen = () => (
   <View backgroundColor="tertiary.50" px={4}>
@@ -10,6 +10,7 @@ export const HomeScreen = () => (
         <VStack space={3}>
           <CardTasks />
           <CardAvailableBalance />
+          <CardCreditCards />
         </VStack>
       </VStack>
     </ScrollView>

@@ -20,11 +20,7 @@ export const Task = () => (
         <Text fontSize={16} fontWeight="bold">
           $996.53
         </Text>
-        <Button
-          variant="unstyled"
-          p={0}
-          fontSize={12}
-          justifyContent="flex-end">
+        <Button variant="ghost" p={0} fontSize={12} justifyContent="flex-end">
           <Text fontSize={14} fontWeight="bold" color="primary.300">
             Add
           </Text>

@@ -34,20 +34,27 @@ export const CardAvailableBalance = () => {
       </Card.Content>
 
       <Card.Footer>
-        <ScrollView horizontal>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          overflow="visible">
           <HStack space={2}>
-            <Button variant="outline">
+            <Button
+              variant="outline"
+              startIcon={<MCIcon name="cash-plus" size={26} />}>
               <Flex flexDirection="row" alignItems="center">
-                <MCIcon name="cash-plus" size={26} />
-                <Text ml={1} fontSize={16} fontWeight="bold">
+                <Text fontSize={16} fontWeight="bold">
                   Deposit check
                 </Text>
               </Flex>
             </Button>
-            <Button variant="outline">
-              <Flex flexDirection="row" alignItems="center">
+            <Button
+              variant="outline"
+              startIcon={
                 <IonIcon name="arrow-forward-circle-outline" size={26} />
-                <Text ml={1} fontSize={16} fontWeight="bold">
+              }>
+              <Flex flexDirection="row" alignItems="center">
+                <Text fontSize={16} fontWeight="bold">
                   Send payment
                 </Text>
               </Flex>
