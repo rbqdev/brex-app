@@ -1,8 +1,13 @@
 #import "AppDelegate.h"
 
+#if RCT_DEV
+#import <React/RCTDevLoadingView.h>
+#endif
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "RNSplashScreen.h"
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -36,6 +41,10 @@ static void InitializeFlipper(UIApplication *application) {
                                                    moduleName:@"MyApp"
                                             initialProperties:nil];
 
+#if RCT_DEV
+[bridge moduleForClass:[RCTDevLoadingView class]];
+#endif
+
   if (@available(iOS 13.0, *)) {
       rootView.backgroundColor = [UIColor systemBackgroundColor];
   } else {
@@ -47,6 +56,8 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  // Set the splash screen to show by default.
+  [RNSplashScreen show]; 
   return YES;
 }
 
