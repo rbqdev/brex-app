@@ -1,68 +1,92 @@
-import { Box, Flex, Text, VStack } from 'native-base';
+import { Box, Flex, Pressable, Text, VStack } from 'native-base';
 import React from 'react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { customTheme } from 'src/theme';
 
-type CreditCardProps = {
-  isPressed?: boolean;
+export type CreditCardData = {
+  id: number;
+  name: string;
+  creditRemaining: string;
+  fourLastDigits: string;
 };
 
-export const CreditCard = ({ isPressed }: CreditCardProps) => {
+type CreditCardProps = CreditCardData & {
+  isSelected?: boolean;
+  onPress?: (creditCardData: CreditCardData) => void | undefined;
+};
+
+export const CreditCard = ({
+  id,
+  name,
+  creditRemaining,
+  fourLastDigits,
+  isSelected,
+  onPress,
+}: CreditCardProps) => {
   return (
-    <VStack>
-      <Box
-        borderWidth={2}
-        borderRadius={4}
-        borderColor={isPressed ? 'primary.500' : 'transparent'}
-        minW={170}>
-        <Flex
+    <Pressable
+      onPress={() =>
+        onPress && onPress({ id, name, creditRemaining, fourLastDigits })
+      }>
+      <VStack>
+        <Box
           borderWidth={2}
           borderRadius={4}
-          borderColor={isPressed ? 'secondary.50' : 'transparent'}
-          background={isPressed ? 'secondary.800' : 'secondary.50'}
-          justifyContent="space-between">
-          <Flex p={2} flexGrow={1} height={70}>
-            <Text
-              fontSize={12}
-              fontWeight="bold"
-              color={isPressed ? 'secondary.50' : 'secondary.800'}>
-              Brex Card
-            </Text>
-            <Text
-              fontSize={12}
-              color={isPressed ? 'secondary.50' : 'secondary.800'}>
-              $12.000 remaining
-            </Text>
-          </Flex>
-
+          borderColor={isSelected ? 'primary.500' : 'transparent'}
+          minW={170}>
           <Flex
-            background={isPressed ? 'secondary.900' : 'secondary.200'}
-            alignItems="flex-end"
-            position="relative"
-            height={5}>
-            <Box
-              width={20}
-              height={4}
-              background={
-                isPressed
-                  ? customTheme.colors.secondary[900]
-                  : customTheme.colors.secondary[200]
-              }
-              position="absolute"
-              top={-12}
-              right={0}
-              borderTopLeftRadius={4}
-            />
-            <Box position="absolute" right={2} top={-7}>
-              <FAIcon
-                name="cc-mastercard"
-                size={20}
-                color={customTheme.colors.secondary[50]}
+            borderWidth={2}
+            borderRadius={4}
+            borderColor={isSelected ? 'secondary.50' : 'transparent'}
+            background={isSelected ? 'secondary.800' : 'secondary.50'}
+            justifyContent="space-between">
+            <Flex p={2} flexGrow={1} height={70}>
+              <Text
+                fontSize={12}
+                fontWeight="bold"
+                color={isSelected ? 'secondary.50' : 'secondary.800'}>
+                {name}
+              </Text>
+              <Text
+                fontSize={12}
+                color={isSelected ? 'secondary.50' : 'secondary.800'}>
+                {creditRemaining} remaining
+              </Text>
+            </Flex>
+
+            <Flex
+              background={isSelected ? 'secondary.900' : 'secondary.200'}
+              alignItems="flex-end"
+              position="relative"
+              height={5}>
+              <Box
+                width={20}
+                height={4}
+                background={
+                  isSelected
+                    ? customTheme.colors.secondary[900]
+                    : customTheme.colors.secondary[200]
+                }
+                position="absolute"
+                top={-12}
+                right={0}
+                borderTopLeftRadius={4}
               />
-            </Box>
+              <Box position="absolute" right={2} top={-7}>
+                <FAIcon
+                  name="cc-mastercard"
+                  size={20}
+                  color={
+                    isSelected
+                      ? customTheme.colors.secondary[50]
+                      : customTheme.colors.secondary[50]
+                  }
+                />
+              </Box>
+            </Flex>
           </Flex>
-        </Flex>
-      </Box>
-    </VStack>
+        </Box>
+      </VStack>
+    </Pressable>
   );
 };

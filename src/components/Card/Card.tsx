@@ -2,7 +2,7 @@ import { Box, Divider, VStack } from 'native-base';
 import React from 'react';
 
 type CardProps = {
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element | JSX.Element[] | null;
   bgColor?: string;
   hasDividers?: boolean;
 };
