@@ -1,16 +1,10 @@
-import { Button, Flex, HStack, Text, VStack } from 'native-base';
+import { Button, HStack, Text, VStack } from 'native-base';
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 export const Task = () => (
   <HStack space={4} alignItems="center" flexGrow={1}>
-    <Flex
-      borderWidth={2}
-      borderRadius={4}
-      justifyContent="center"
-      alignItems="center">
-      <Icon name="attach-money" size={20} />
-    </Flex>
+    <IonIcon name="logo-usd" size={20} />
 
     <HStack justifyContent="space-between" flexGrow={1}>
       <VStack>
