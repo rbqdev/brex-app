@@ -1,10 +1,12 @@
-import { Box, Button, HStack, Text, VStack } from 'native-base';
+import { Link } from '@react-navigation/native';
+import { Box, HStack, Text, VStack } from 'native-base';
 import { ScrollView } from 'native-base';
 import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Card } from 'src/components';
+import { creditCardsBuilder } from 'src/mocks';
+import type { CreditCardType } from 'src/types';
 
-import type { CreditCardData } from './components';
 import { CreditCard } from './components';
 
 const CardHeader = () => (
@@ -14,26 +16,24 @@ const CardHeader = () => (
         Cards
       </Text>
       <Box>
-        <Button
-          variant="unstyled"
-          p={0}
-          fontSize={12}
-          justifyContent="flex-end">
+        <Link to="/Cards">
           <Text fontWeight="bold" color="primary.300">
             View <IonIcon name="arrow-forward-outline" />
           </Text>
-        </Button>
+        </Link>
       </Box>
     </HStack>
   </Card.Header>
 );
 
 const CardContent = ({
-  selectedCard,
-  handleSelectCard,
+  creditCards,
+  selectedCreditCard,
+  handleSelectCreditCard,
 }: {
-  selectedCard: CreditCardData;
-  handleSelectCard: (creditCardData: CreditCardData) => void;
+  creditCards: CreditCardType[];
+  selectedCreditCard: CreditCardType;
+  handleSelectCreditCard: (creditCard: CreditCardType) => void;
 }) => (
   <Card.Content paddingBottom={0.1}>
     <ScrollView
@@ -41,15 +41,15 @@ const CardContent = ({
       showsHorizontalScrollIndicator={false}
       overflow="visible">
       <HStack space={2}>
-        {[...new Array(4)].map((_, index) => (
+        {creditCards.map(({ id, name, creditRemaining, fourLastDigits }) => (
           <CreditCard
-            name="Brex Card"
-            creditRemaining="$12.000"
-            fourLastDigits="5555"
-            isSelected={selectedCard.id === index}
-            id={index}
-            key={index}
-            onPress={handleSelectCard}
+            name={name}
+            creditRemaining={creditRemaining}
+            fourLastDigits={fourLastDigits}
+            isSelected={selectedCreditCard.id === id}
+            id={id}
+            key={id}
+            onPress={handleSelectCreditCard}
           />
         ))}
       </HStack>
@@ -60,8 +60,10 @@ const CardContent = ({
 const CardFooter = ({
   fourLastDigits,
 }: {
-  fourLastDigits?: CreditCardData['fourLastDigits'];
+  fourLastDigits?: CreditCardType['fourLastDigits'];
 }) => {
+  const [creditCardLocked, setCreditCardLocked] = React.useState<boolean>(true);
+
   return (
     <Card.Footer>
       <VStack space={3}>
@@ -71,7 +73,19 @@ const CardFooter = ({
               <Text fontWeight="bold" fontSize={16}>
                 Brex Card
               </Text>
-              <Text color="secondary.500">Tap to unlock</Text>
+              <Text
+                color="secondary.500"
+                onPress={() => setCreditCardLocked(!creditCardLocked)}>
+                Tap to {creditCardLocked ? 'unlock' : 'lock'}
+                <IonIcon
+                  size={16}
+                  name={
+                    creditCardLocked
+                      ? 'lock-closed-outline'
+                      : 'lock-open-outline'
+                  }
+                />
+              </Text>
             </HStack>
             <HStack justifyContent="space-between">
               <Text fontWeight="bold">Number</Text>
@@ -93,23 +107,26 @@ const CardFooter = ({
 };
 
 export const CardCreditCards = () => {
-  const [selectedCard, setSelectedCard] = React.useState<CreditCardData>(
-    {} as CreditCardData,
+  const [selectedCreditCard, setSelectedCard] = React.useState<CreditCardType>(
+    {} as CreditCardType,
   );
 
-  const handleSelectCard = (creditCardData: CreditCardData) =>
-    setSelectedCard({ ...creditCardData });
+  const creditCards = React.useMemo(() => creditCardsBuilder(), []);
+
+  const handleSelectCreditCard = (creditCard: CreditCardType) =>
+    setSelectedCard({ ...creditCard });
 
   return (
     <Card hasDividers={false}>
       <CardHeader />
 
       <CardContent
-        selectedCard={selectedCard}
-        handleSelectCard={handleSelectCard}
+        creditCards={creditCards}
+        selectedCreditCard={selectedCreditCard}
+        handleSelectCreditCard={handleSelectCreditCard}
       />
 
-      <CardFooter fourLastDigits={selectedCard.fourLastDigits} />
+      <CardFooter fourLastDigits={selectedCreditCard.fourLastDigits} />
     </Card>
   );
 };

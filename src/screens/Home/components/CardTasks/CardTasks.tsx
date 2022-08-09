@@ -1,10 +1,13 @@
 import { Box, HStack, Text } from 'native-base';
 import React from 'react';
 import { Card } from 'src/components';
+import { tasksBuilder } from 'src/mocks/builders';
 
 import { TaskList } from './components';
 
 export const CardTasks = () => {
+  const tasks = tasksBuilder();
+
   return (
     <Card>
       <Card.Header>
@@ -14,13 +17,13 @@ export const CardTasks = () => {
           </Text>
           <Box background="primary.400" px={3} py={1} borderRadius={50}>
             <Text fontSize={12} color="primary.50" fontWeight="600">
-              4 tasks
+              {tasks.length} tasks
             </Text>
           </Box>
         </HStack>
       </Card.Header>
       <Card.Content>
-        <TaskList />
+        <TaskList tasks={tasks} />
       </Card.Content>
     </Card>
   );

@@ -27,12 +27,13 @@ const tabScreens: TabScreen[] = [
   },
   {
     component: CashScreen,
-    name: 'Cash',
-    icon: 'logo-usd',
+    name: 'Wallet',
+    icon: 'wallet-outline',
+    iconActive: 'wallet',
   },
   {
     component: CreditCardsScreen,
-    name: 'Card',
+    name: 'Cards',
     icon: 'card-outline',
     iconActive: 'card',
   },

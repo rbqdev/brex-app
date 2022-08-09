@@ -1,40 +1,96 @@
 import { Button, HStack, Text, VStack } from 'native-base';
+import { Actionsheet, useDisclose } from 'native-base';
 import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { CurrencyText } from 'src/components';
+import { customTheme } from 'src/theme';
+import type { TaskType } from 'src/types';
 
-export const Task = () => (
-  <HStack space={4} alignItems="center" flexGrow={1}>
-    <IonIcon name="logo-usd" size={20} />
+export const Task = ({
+  title,
+  description,
+  amount,
+  iconName = 'logo-usd',
+}: TaskType) => {
+  const { isOpen, onOpen, onClose } = useDisclose();
 
-    <HStack justifyContent="space-between" flexGrow={1}>
-      <VStack>
-        <Text fontSize={16} fontWeight="bold">
-          Testes
-        </Text>
-        <Text fontSize={14} color="secondary.500">
-          Testes
-        </Text>
-      </VStack>
+  return (
+    <HStack space={4} alignItems="center" flexGrow={1}>
+      <IonIcon name={iconName} size={20} />
 
-      <VStack>
-        <Text fontSize={16} fontWeight="bold">
-          $996.53
-        </Text>
-        <Button variant="ghost" p={0} fontSize={12} justifyContent="flex-end">
-          <Text fontSize={14} fontWeight="bold" color="primary.300">
-            Add
+      <HStack justifyContent="space-between" flexGrow={1}>
+        <VStack>
+          <Text
+            fontSize={16}
+            fontWeight="bold"
+            maxW={200}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
+            {title}
           </Text>
-        </Button>
-      </VStack>
-    </HStack>
-  </HStack>
-);
+          <Text fontSize={14} color="secondary.500">
+            {description}
+          </Text>
+        </VStack>
 
-export const TaskList = () => {
+        <VStack>
+          <Text fontSize={16} fontWeight="bold">
+            <CurrencyText value={amount} />
+          </Text>
+          <Button
+            variant="ghost"
+            p={0}
+            fontSize={12}
+            justifyContent="flex-end"
+            onPress={onOpen}>
+            <Text fontSize={14} fontWeight="bold" color="primary.300">
+              Add
+            </Text>
+          </Button>
+
+          <Actionsheet isOpen={isOpen} onClose={onClose}>
+            <Actionsheet.Content>
+              <Text fontSize={16} fontWeight="bold">
+                {title}
+              </Text>
+              <Actionsheet.Item>
+                <HStack alignItems="center" space={2}>
+                  <Text fontSize={16}>Edit</Text>
+                  <IonIcon name="create-outline" size={16} />
+                </HStack>
+              </Actionsheet.Item>
+              <Actionsheet.Item>
+                <HStack alignItems="center" space={2}>
+                  <Text fontSize={16} color="danger.500">
+                    Delete
+                  </Text>
+                  <IonIcon
+                    name="trash-outline"
+                    size={16}
+                    color={customTheme.colors.danger[500]}
+                  />
+                </HStack>
+              </Actionsheet.Item>
+            </Actionsheet.Content>
+          </Actionsheet>
+        </VStack>
+      </HStack>
+    </HStack>
+  );
+};
+
+export const TaskList = ({ tasks }: { tasks: TaskType[] }) => {
   return (
     <VStack space={2}>
-      {[...new Array(4)].map(index => (
-        <Task key={index} />
+      {tasks.map(({ id, title, description, amount, iconName }) => (
+        <Task
+          key={id}
+          id={id}
+          title={title}
+          description={description}
+          amount={amount}
+          iconName={iconName}
+        />
       ))}
     </VStack>
   );

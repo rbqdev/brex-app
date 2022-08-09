@@ -1,18 +1,13 @@
 import { Box, Flex, Pressable, Text, VStack } from 'native-base';
 import React from 'react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
+import { CurrencyText } from 'src/components';
 import { customTheme } from 'src/theme';
+import type { CreditCardType } from 'src/types';
 
-export type CreditCardData = {
-  id: number;
-  name: string;
-  creditRemaining: string;
-  fourLastDigits: string;
-};
-
-type CreditCardProps = CreditCardData & {
+type CreditCardProps = CreditCardType & {
   isSelected?: boolean;
-  onPress?: (creditCardData: CreditCardData) => void | undefined;
+  onPress?: (creditCard: CreditCardType) => void | undefined;
 };
 
 export const CreditCard = ({
@@ -50,7 +45,7 @@ export const CreditCard = ({
               <Text
                 fontSize={12}
                 color={isSelected ? 'secondary.50' : 'secondary.800'}>
-                {creditRemaining} remaining
+                <CurrencyText value={creditRemaining} /> remaining
               </Text>
             </Flex>
 
