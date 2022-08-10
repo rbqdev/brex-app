@@ -1,6 +1,5 @@
 import { Link } from '@react-navigation/native';
-import { Box, Button, Flex, HStack, Text } from 'native-base';
-import { ScrollView } from 'native-base';
+import { Box, Button, Flex, HStack, ScrollView, Text } from 'native-base';
 import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';

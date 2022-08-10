@@ -1,6 +1,5 @@
 import { Link } from '@react-navigation/native';
-import { Box, HStack, Text, VStack } from 'native-base';
-import { ScrollView } from 'native-base';
+import { Box, HStack, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Card } from 'src/components';

@@ -1,5 +1,11 @@
-import { Button, HStack, Text, VStack } from 'native-base';
-import { Actionsheet, useDisclose } from 'native-base';
+import {
+  Actionsheet,
+  Button,
+  HStack,
+  Text,
+  useDisclose,
+  VStack,
+} from 'native-base';
 import React from 'react';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CurrencyText } from 'src/components';
@@ -28,7 +34,12 @@ export const Task = ({
             numberOfLines={1}>
             {title}
           </Text>
-          <Text fontSize={14} color="secondary.500">
+          <Text
+            fontSize={14}
+            color="secondary.500"
+            maxW={200}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
             {description}
           </Text>
         </VStack>
@@ -76,22 +87,5 @@ export const Task = ({
         </VStack>
       </HStack>
     </HStack>
-  );
-};
-
-export const TaskList = ({ tasks }: { tasks: TaskType[] }) => {
-  return (
-    <VStack space={2}>
-      {tasks.map(({ id, title, description, amount, iconName }) => (
-        <Task
-          key={id}
-          id={id}
-          title={title}
-          description={description}
-          amount={amount}
-          iconName={iconName}
-        />
-      ))}
-    </VStack>
   );
 };

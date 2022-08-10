@@ -1,9 +1,27 @@
-import { Box, HStack, Text } from 'native-base';
+import { Box, HStack, Text, VStack } from 'native-base';
 import React from 'react';
 import { Card } from 'src/components';
 import { tasksBuilder } from 'src/mocks/builders';
+import type { TaskType } from 'src/types';
 
-import { TaskList } from './components';
+import { Task } from './components';
+
+export const TaskList = ({ tasks }: { tasks: TaskType[] }) => {
+  return (
+    <VStack space={2}>
+      {tasks.map(({ id, title, description, amount, iconName }) => (
+        <Task
+          key={id}
+          id={id}
+          title={title}
+          description={description}
+          amount={amount}
+          iconName={iconName}
+        />
+      ))}
+    </VStack>
+  );
+};
 
 export const CardTasks = () => {
   const tasks = tasksBuilder();
