@@ -5,7 +5,7 @@ import { tasksBuilder } from 'src/mocks/builders';
 
 import { TaskList } from './components';
 
-const tasks = tasksBuilder();
+const tasks = tasksBuilder({ length: Math.floor(Math.random() * 5) });
 
 export const CardTasks = () => {
   return (
